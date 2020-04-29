@@ -259,7 +259,7 @@ class AccountInvoice(models.Model):
         track_visibility='always')
 
     refund_invoice_id = fields.Many2one('account.invoice', string="Invoice for which this invoice is the credit note")
-    number = fields.Char(related='move_id.name', store=True, readonly=True, copy=False)
+    number = fields.Char(related='move_id.name', store=True, readonly=False, copy=False)
     move_name = fields.Char(string='Journal Entry Name', readonly=False,
         default=False, copy=False,
         help="Technical field holding the number given to the invoice, automatically set when the invoice is validated then stored to set the same number again if the invoice is cancelled, set to draft and re-validated.")
@@ -1775,7 +1775,7 @@ class AccountInvoiceLine(models.Model):
             self_lang = self
             if part.lang:
                 self_lang = self.with_context(lang=part.lang)
-   
+
             product = self_lang.product_id
             account = self.get_invoice_line_account(type, product, fpos, company)
             if account:
